@@ -1,20 +1,35 @@
-class Character:
-    def __init__(self, name, hp, attack, defense):
-        self.name = name
-        self.hp = hp
-        self.max_hp = hp
-        self.attack = attack
-        self.defense = defense
+import random
 
-    def is_alive(self):
-        return self.hp > 0
+def battle(player, enemy):
+    print("\n戦闘開始！")
+    while player.is_alive() and enemy.is_alive():
+        print(f"\n{player.name}のHP: {player.hp}/{player.max_hp}")
+        print(f"{enemy.name}のHP: {enemy.hp}/{enemy.max_hp}")
+        print("1: 攻撃する  2: 逃げる")
+        choice = input("行動を選んでください: ")
+        if choice == "1":
+            # プレイヤー攻撃
+            damage = max(0, player.attack - enemy.defense + random.randint(-2, 2))
+            enemy.take_damage(damage)
+            print(f"{player.name}の攻撃！ {enemy.name}に {damage} のダメージ！")
+        elif choice == "2":
+            # 逃走処理（成功率50%）
+            if random.random() < 0.5:
+                print("逃げ切った！")
+                return
+            else:
+                print("逃げられなかった！")
+        else:
+            print("無効な選択です。")
+            continue
 
-    def take_damage(self, damage):
-        self.hp -= damage
-        if self.hp < 0:
-            self.hp = 0
+        if enemy.is_alive():
+            # 敵の攻撃
+            damage = max(0, enemy.attack - player.defense + random.randint(-2, 2))
+            player.take_damage(damage)
+            print(f"{enemy.name}の攻撃！ {player.name}に {damage} のダメージ！")
 
-class Player(Character):
-    def __init__(self, name):
-        # 勇者の初期ステータスは例示です
-        super().__init__(name, hp=100, attack=20, defense=10)
+    if player.is_alive():
+        print(f"\n{player.name}の勝利！")
+    else:
+        print(f"\n{player.name}は倒れた...")
