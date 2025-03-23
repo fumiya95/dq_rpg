@@ -33,3 +33,13 @@ def battle(player, enemy):
         print(f"\n{player.name}の勝利！")
     else:
         print(f"\n{player.name}は倒れた...")
+
+def main():
+    print("ドラゴンクエスト風RPGへようこそ！")
+    name = input("あなたの勇者の名前を入力してください: ")
+    player = Player(name)
+    enemy = Enemy("スライム", hp=50, attack=15, defense=5)
+    battle(player, enemy)
+
+if __name__ == "__main__":
+    main()
