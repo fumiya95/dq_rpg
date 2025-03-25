@@ -1,3 +1,47 @@
+import random
+import sys
+
+# キャラクターの基本クラス
+class Character:
+    def __init__(self, name, hp, attack, defense):
+        self.name = name
+        self.hp = hp
+        self.max_hp = hp
+        self.attack = attack
+        self.defense = defense
+
+    def is_alive(self):
+        return self.hp > 0
+
+    def take_damage(self, damage):
+        self.hp -= damage
+        if self.hp < 0:
+            self.hp = 0
+
+# プレイヤークラス（勇者）
+class Player(Character):
+    def __init__(self, name):
+        super().__init__(name, hp=100, attack=20, defense=10)
+        self.exp = 0
+        self.level = 1
+
+    def gain_exp(self, amount):
+        self.exp += amount
+        print(f"{self.name}は{amount}の経験値を獲得！ (累計: {self.exp})")
+        # レベルアップの閾値: 現在のレベル×50
+        if self.exp >= self.level * 50:
+            self.level += 1
+            self.exp = 0
+            self.max_hp += 20
+            self.hp = self.max_hp
+            self.attack += 5
+            self.defense += 3
+            print(f"{self.name}はレベルアップ！ 現在のレベル: {self.level}")
+
+# 敵クラス（プレイヤーと同じ基本機能を使用）
+class Enemy(Character):
+    pass
+
 def battle(player, enemy):
     print("\n戦闘開始！")
     while player.is_alive() and enemy.is_alive():
@@ -12,7 +56,7 @@ def battle(player, enemy):
         elif choice == "2":
             if random.random() < 0.5:
                 print("逃げ切った！ バトル終了。")
-                return False  # 逃走成功
+                return False
             else:
                 print("逃げられなかった！")
         else:
@@ -26,6 +70,7 @@ def battle(player, enemy):
 
     if player.is_alive():
         print(f"\n{player.name}の勝利！")
+        player.gain_exp(50)
         return True
     else:
         print(f"\n{player.name}は倒れた...")
@@ -37,15 +82,16 @@ def main():
     player = Player(name)
 
     while True:
+        # 敵は毎回新規生成（例: スライム）
         enemy = Enemy("スライム", hp=50, attack=15, defense=5)
         result = battle(player, enemy)
         if not player.is_alive():
             break
-
         choice = input("もう一度戦いますか？ (Y/N): ")
         if choice.lower() != "y":
             break
     print("ゲーム終了。ありがとうございました！")
+    sys.exit()
 
 if __name__ == "__main__":
     main()
