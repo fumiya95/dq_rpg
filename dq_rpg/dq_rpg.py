@@ -95,3 +95,24 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+# 既存のEnemyクラスはそのまま使うので、テンプレートを定義
+enemy_templates = [
+    {"name": "スライム",   "hp": 50,  "attack": 15, "defense": 5},
+    {"name": "ゴブリン",   "hp": 60,  "attack": 18, "defense": 7},
+    {"name": "オーク",     "hp": 80,  "attack": 20, "defense": 10},
+    {"name": "バット",     "hp": 40,  "attack": 12, "defense": 4},
+    {"name": "ウルフ",     "hp": 70,  "attack": 17, "defense": 8},
+    {"name": "スケルトン", "hp": 55,  "attack": 16, "defense": 6},
+    {"name": "ゾンビ",     "hp": 65,  "attack": 14, "defense": 9},
+    {"name": "ドラゴン",   "hp": 120, "attack": 25, "defense": 15},
+    {"name": "ダークナイト", "hp": 90, "attack": 22, "defense": 12},
+    {"name": "魔法使い",   "hp": 45,  "attack": 30, "defense": 3}
+]
+
+def choose_enemy():
+    # enemy_templates からランダムに1体選ぶ
+    template = random.choice(enemy_templates)
+    return Enemy(template["name"], hp=template["hp"], attack=template["attack"], defense=template["defense"])
