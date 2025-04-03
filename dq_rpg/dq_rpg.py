@@ -1,3 +1,30 @@
+def show_story():
+    print("――――――――――――――――――――――――――――")
+    print("昔々、遥かなる王国に一人の勇者がいた。")
+    print("その勇者は、暗黒の勢力に立ち向かうため、")
+    print("壮大な冒険の旅に出る決意を固めた。")
+    print("――――――――――――――――――――――――――――\n")
+
+def main():
+    show_story()  # イントロストーリー表示
+
+    print("ドラゴンクエスト風RPGへようこそ！")
+    name = input("あなたの勇者の名前を入力してください: ")
+    player = Player(name)
+
+    while True:
+        enemy = choose_enemy()  # ランダムに敵を選択
+        print(f"\n現れた敵は {enemy.name} です！")
+        result = battle(player, enemy)
+        if not player.is_alive():
+            break
+        choice = input("もう一度戦いますか？ (Y/N): ")
+        if choice.lower() != "y":
+            break
+    print("ゲーム終了。ありがとうございました！")
+    sys.exit()
+
+
 def battle(player, enemy):
     print("\n戦闘開始！")
     # スキル使用制限用辞書（技2～5は1回のみ使用可能）
