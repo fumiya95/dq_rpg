@@ -52,7 +52,7 @@ def battle(player, enemy):
                 print("逃げられなかった！")
                 continue
         
-        # 技2～5は1回しか使えない
+       
         if choice in ["2", "3", "4", "5"]:
             if skill_usage[choice]:
                 print("その技は既に使用済みです。別の技を選んでください。")
