@@ -5,6 +5,13 @@ def show_story():
     print("壮大な冒険の旅に出る決意を固めた。")
     print("――――――――――――――――――――――――――――\n")
 
+def battle(player, enemy):
+    print("\n戦闘開始！")
+    # ここでナレーションを強化
+    print(f"遠い森の奥から、恐るべき {enemy.name} が姿を現した！")
+    
+    # 以降は同じ処理…
+
 def main():
     show_story()  # イントロストーリー表示
 
